@@ -5,11 +5,11 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan') // logger
 const app = express()
 const router = require('./router')
-// add const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 const cors = require('cors')
 
 // DB Setup
-// mongoose.connect('mongodb://localhost/crowdlearn')
+mongoose.connect('mongodb://localhost/groupme-clone')
 
 // App Setup
 app.use(morgan('combined'))
