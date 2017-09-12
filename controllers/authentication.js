@@ -1,8 +1,5 @@
 const jwt = require('jwt-simple')
 const User = require('../models/user')
-const googleMapsClient = require('@google/maps').createClient({
-  key: 'AIzaSyD-elxORKUUktuhgwrztT8pZPbyX2sS_4w'
-})
 
 function tokenForUser (user) {
   const timestamp = new Date().getTime()
@@ -52,6 +49,15 @@ exports.signup = function (req, res, next) {
   })
 }
 
-exports.checkToken = function() {
+exports.checkToken = function (token) {
+  const decodedToken = jwt.decode(token, 'mysupersecret')
 
+  User.findOne({ username: username }, function (err, existingUser) {
+    if (err) { return next(err) }
+
+    // If a user with email does exist, return an error
+    if (existingUser) {
+      return res.status(422).send({ error: 'Username is in use' })
+    }
+  })
 }
