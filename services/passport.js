@@ -10,6 +10,7 @@ const localLogin = new LocalStrategy(localOptions, function (username, password,
   // Verify this username and password, call done with the user
   // if it is the correct username and password
   // otherwise, call done with false
+  console.log('reached passport local strat')
   User.findOne({ username: username }, function (err, user) {
     if (err) { return done(err) }
     if (!user) { return done(null, false) }

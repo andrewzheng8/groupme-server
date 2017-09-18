@@ -9,6 +9,7 @@ function tokenForUser (user) {
 exports.signin = function (req, res, next) {
   // User has already had their email and password auth'd
   // We just need to give them a token
+  console.log('reached sign in auth')
   const user = req.user
   res.send({ token: tokenForUser(user), user })
 }
@@ -31,7 +32,6 @@ exports.signup = function (req, res, next) {
     if (existingUser) {
       return res.status(422).send({ error: 'Username is in use' })
     }
-
     // If a user with email does NOT exist, create and save user record
     const user = new User({
       username: username,
@@ -46,18 +46,5 @@ exports.signup = function (req, res, next) {
       // Repond to request indicating the user was created
       res.json({ token: tokenForUser(user), user })
     })
-  })
-}
-
-exports.checkToken = function (token) {
-  const decodedToken = jwt.decode(token, 'mysupersecret')
-
-  User.findOne({ username: username }, function (err, existingUser) {
-    if (err) { return next(err) }
-
-    // If a user with email does exist, return an error
-    if (existingUser) {
-      return res.status(422).send({ error: 'Username is in use' })
-    }
   })
 }
