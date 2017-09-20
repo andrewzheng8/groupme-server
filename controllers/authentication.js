@@ -9,7 +9,6 @@ function tokenForUser (user) {
 exports.signin = function (req, res, next) {
   // User has already had their email and password auth'd
   // We just need to give them a token
-  console.log('reached sign in auth')
   const user = req.user
   res.send({ token: tokenForUser(user), user })
 }
@@ -17,14 +16,12 @@ exports.signin = function (req, res, next) {
 exports.signup = function (req, res, next) {
   const username = req.body.username
   const password = req.body.password
-  // const residence = req.body.residence
-  // const residence = req.body.residence add in nearby residence to where you reside
-  // || !residence
+
   if (!username || !password) {
     return res.status(422).send({ error: 'You must provide username, password, and residence address'})
   }
 
-  // See if a user with the given email exists
+  // See if a user with the given username exists
   User.findOne({ username: username }, function (err, existingUser) {
     if (err) { return next(err) }
 

@@ -6,8 +6,11 @@ const bcrypt = require('bcrypt-nodejs')
 const userSchema = new Schema({
   username: { type: String, unique: true},
   password: String,
-
+  chats: [{ type: Schema.Types.ObjectId, ref: 'chat' }],
+  contacts: [{ type: Schema.Types.ObjectId, ref: 'user' }]
 })
+
+userSchema.index({username: 'text'})
 
 // On Save Hook, encrypt password
 // Before saving a model, run this function
