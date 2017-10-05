@@ -6,6 +6,7 @@ const requireAuth = passport.authenticate('jwt', { session: false })
 const requireSignin = passport.authenticate('local', { session: false })
 
 const UsersController = require('./controllers/users')
+const FriendsController = require('./controllers/friends')
 
 module.exports = function (app) {
   // *** authentication routes
@@ -16,6 +17,8 @@ module.exports = function (app) {
   app.post('/api/v1/signup', Authentication.signup)
 
   app.get('/api/v1/users/query/:queryString', UsersController.queryForUsers)
+
+  app.post('/api/v1/users/:userId/friends', FriendsController.addFriend)
   app.get('/api/v1/users', UsersController.searchAllUsers)
 
   //

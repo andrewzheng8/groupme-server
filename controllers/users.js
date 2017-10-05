@@ -11,7 +11,7 @@ exports.queryForUsers = function (req, res, next) {
 
   if (queryString.includes(' ')) {
     return res.status(422).send({error: 'No usernames have a space inside'})
-  }
+  } // this may not be valid since the username doesn't have vaidations on it
 
   const queryRegExp = new RegExp(queryString)
 

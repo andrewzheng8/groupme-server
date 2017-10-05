@@ -2,6 +2,7 @@
 const express = require('express')
 const http = require('http')
 const bodyParser = require('body-parser')
+// var methodOverride = require('method-override')
 const morgan = require('morgan') // logger
 const app = express()
 const router = require('./router')
@@ -15,6 +16,12 @@ mongoose.connect('mongodb://localhost/groupme-clone')
 app.use(morgan('combined'))
 app.use(cors())
 app.use(bodyParser.json({ type: '*/*' }))
+// app.use(methodOverride())
+// app.use(function (err, req, res, next) {
+//   // error handling logic
+//   console.error(err.stack)
+//   res.status(500).send('Something broke!')
+// })
 router(app)
 // app.use middleware
 // Server Setup

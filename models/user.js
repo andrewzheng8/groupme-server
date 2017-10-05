@@ -3,11 +3,12 @@ const Schema = mongoose.Schema
 const bcrypt = require('bcrypt-nodejs')
 
 // Define our model
+const match = [/^\S*\S$/]
 const userSchema = new Schema({
-  username: { type: String, unique: true},
+  username: { type: String, unique: true}, // unique is not a validator
   password: String,
   chats: [{ type: Schema.Types.ObjectId, ref: 'chat' }],
-  contacts: [{ type: Schema.Types.ObjectId, ref: 'user' }]
+  friends: [{ type: Schema.Types.ObjectId, ref: 'user' }]
 })
 
 userSchema.index({username: 'text'})

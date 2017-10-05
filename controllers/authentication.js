@@ -6,11 +6,15 @@ function tokenForUser (user) {
   return jwt.encode({ sub: user.id, iat: timestamp }, 'mysupersecret')
 }
 
+function viewerInfo (user) {
+  return {_id: user._id, username: user.username}
+}
+
 exports.signin = function (req, res, next) {
   // User has already had their email and password auth'd
   // We just need to give them a token
   const user = req.user
-  res.send({ token: tokenForUser(user), user })
+  res.send({ token: tokenForUser(user), viewer: viewerInfo(user) })
 }
 
 exports.signup = function (req, res, next) {
@@ -41,7 +45,7 @@ exports.signup = function (req, res, next) {
       if (err) { return next(err) }
 
       // Repond to request indicating the user was created
-      res.json({ token: tokenForUser(user), user })
+      res.json({ token: tokenForUser(user), viewer: viewerInfo(user) })
     })
   })
 }
